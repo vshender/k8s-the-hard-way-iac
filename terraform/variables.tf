@@ -39,3 +39,11 @@ variable worker_count {
   type        = number
   default     = 3
 }
+
+variable user {
+  description = "User to create on the instances"
+}
+
+variable public_key_path {
+  description = "Path to the public key used to connect to instances"
+}

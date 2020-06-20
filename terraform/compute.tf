@@ -19,6 +19,7 @@ resource "google_compute_instance" "kubernetes_controller" {
   network_interface {
     subnetwork = google_compute_subnetwork.kubernetes_subnetwork.id
     network_ip = "10.240.0.1${count.index}"
+    access_config {}
   }
 
   can_ip_forward = true
@@ -32,6 +33,10 @@ resource "google_compute_instance" "kubernetes_controller" {
       "logging-write",
       "monitoring",
     ]
+  }
+
+  metadata = {
+    ssh-keys = "${var.user}:${file(var.public_key_path)}"
   }
 }
 
@@ -57,6 +62,7 @@ resource "google_compute_instance" "kubernetes_worker" {
   network_interface {
     subnetwork = google_compute_subnetwork.kubernetes_subnetwork.id
     network_ip = "10.240.0.2${count.index}"
+    access_config {}
   }
 
   can_ip_forward = true
@@ -74,5 +80,6 @@ resource "google_compute_instance" "kubernetes_worker" {
 
   metadata = {
     pod-cidr = "10.200.${count.index}.0/24"
+    ssh-keys = "${var.user}:${file(var.public_key_path)}"
   }
 }

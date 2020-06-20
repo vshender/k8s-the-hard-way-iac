@@ -1,1 +1,3 @@
-project = "kubernetes-the-hard-way-000000"
+project         = "kubernetes-the-hard-way-000000"
+user            = "kubeuser"
+public_key_path = "~/.ssh/kubeuser.pub"
